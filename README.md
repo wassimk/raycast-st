@@ -47,7 +47,7 @@ To limit the GitHub busy status to one organization, create `~/.config/st/config
 | Back | Message | Clears DND and GitHub busy, catching up for 15 minutes |
 | Clear Status | | Clears everything |
 
-Each command also matches `st` plus the first letter of the status (`sta` for Away, `stc` for Clear Status), or `st <keyword>` like the CLI. For an exact match that always ranks first, set the same text as an alias in Raycast Settings → Extensions.
+Each command also matches `st <keyword>`, like `st away`, so you can type it the same way as the CLI.
 
 "Until" takes a date, a date and time, or a time today, such as `friday`, `tomorrow`, `3/10 9am`, or `2pm`. See the [st README](https://github.com/wassimk/st#date-formats) for every format and the work day rules.
 
