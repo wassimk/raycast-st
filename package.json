@@ -1,0 +1,226 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "st-status",
+  "title": "Status",
+  "description": "Set your status across Slack and GitHub with a single command, with reminders for Linear.",
+  "icon": "extension-icon.png",
+  "author": "wassimk",
+  "categories": [
+    "Productivity",
+    "Communication"
+  ],
+  "license": "MIT",
+  "platforms": [
+    "macOS"
+  ],
+  "preferences": [
+    {
+      "name": "slackToken",
+      "type": "password",
+      "required": true,
+      "title": "Slack Token",
+      "description": "Slack User OAuth Token (xoxp-...) with users.profile:write and dnd:write scopes. Passed to st as SLACK_PAT.",
+      "placeholder": "xoxp-..."
+    },
+    {
+      "name": "githubToken",
+      "type": "password",
+      "required": true,
+      "title": "GitHub Token",
+      "description": "GitHub classic Personal Access Token with user and read:org scopes. Passed to st as GITHUB_PAT.",
+      "placeholder": "ghp_..."
+    }
+  ],
+  "commands": [
+    {
+      "name": "lunch",
+      "title": "Lunch",
+      "subtitle": "st",
+      "description": "Set a lunch status with DND, ending at the next quarter hour plus an hour or at a given time",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (1:30pm)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "meeting",
+      "title": "Meeting",
+      "subtitle": "st",
+      "description": "Set an in a meeting status, optionally until a time",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (3pm)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "pairing",
+      "title": "Pairing",
+      "subtitle": "st",
+      "description": "Set an in a pairing session status, optionally until a time",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (3pm)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "eod",
+      "title": "End of Day",
+      "subtitle": "st",
+      "description": "Set an outside work hours status with DND until the next work day at 7am",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (monday 8am)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "vacation",
+      "title": "Vacation",
+      "subtitle": "st",
+      "description": "Set an off recharging status with DND and mark GitHub busy",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (3/10 9am)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "sick",
+      "title": "Sick",
+      "subtitle": "st",
+      "description": "Set an out sick status with DND and mark GitHub busy",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (tomorrow)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "away",
+      "title": "Away",
+      "subtitle": "st",
+      "description": "Set an away for a bit status with DND and mark GitHub busy, until 5pm by default",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (2pm)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "back",
+      "title": "Back",
+      "subtitle": "st",
+      "description": "Clear DND and GitHub busy, and set a catching up status for 15 minutes",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "clear",
+      "title": "Clear Status",
+      "subtitle": "st",
+      "description": "Clear Slack status, DND, and GitHub status",
+      "mode": "no-view"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.104.0",
+    "sha256-file": "^1.0.0",
+    "tar": "^7.2.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^2.0.0",
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
+    "@types/sha256-file": "^1.0.3",
+    "@types/tar": "^6.1.13",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint"
+  }
+}
