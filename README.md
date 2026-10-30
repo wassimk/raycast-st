@@ -12,7 +12,7 @@ Raycast commands for [st](https://github.com/wassimk/st), which sets your status
 - **One Command per Status**: Type `lunch`, `vacation`, or `back` in Raycast and press enter.
 - **Optional End Time and Message**: Each command takes an inline "Until" and "Message" argument, using the same date and time formats as `st`.
 - **Failure Reporting**: Shows which service failed and why, since `st` keeps going when one service errors.
-- **No Install Needed**: Downloads the pinned `st` release from GitHub on first run and verifies its SHA-256 checksum.
+- **No Install Needed**: Downloads the latest `st` release from GitHub on first run, checks for a newer one once a day, and verifies each download's SHA-256 checksum.
 - **AI Integration**: Say "put me on vacation until Monday" or "I'm in a meeting until 3pm" in Raycast AI (requires Raycast Pro).
 
 ## 🛠️ Setup
