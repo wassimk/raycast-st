@@ -1,0 +1,263 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "st-status",
+  "title": "Status",
+  "description": "Set your status across Slack and GitHub with a single command, with reminders for Linear.",
+  "icon": "extension-icon.png",
+  "author": "wassimk",
+  "categories": [
+    "Productivity",
+    "Communication"
+  ],
+  "license": "MIT",
+  "platforms": [
+    "macOS"
+  ],
+  "preferences": [
+    {
+      "name": "slackToken",
+      "type": "password",
+      "required": true,
+      "title": "Slack Token",
+      "description": "Slack User OAuth Token (xoxp-...) with users.profile:write and dnd:write scopes. Passed to st as SLACK_PAT.",
+      "placeholder": "xoxp-..."
+    },
+    {
+      "name": "githubToken",
+      "type": "password",
+      "required": true,
+      "title": "GitHub Token",
+      "description": "GitHub classic Personal Access Token with user and read:org scopes. Passed to st as GITHUB_PAT.",
+      "placeholder": "ghp_..."
+    }
+  ],
+  "commands": [
+    {
+      "name": "lunch",
+      "title": "Lunch",
+      "subtitle": "st",
+      "description": "Set a lunch status with DND, ending at the next quarter hour plus an hour or at a given time",
+      "keywords": [
+        "st lunch"
+      ],
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (1:30pm)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "meeting",
+      "title": "Meeting",
+      "subtitle": "st",
+      "description": "Set an in a meeting status, optionally until a time",
+      "keywords": [
+        "st meeting"
+      ],
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (3pm)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "pairing",
+      "title": "Pairing",
+      "subtitle": "st",
+      "description": "Set an in a pairing session status, optionally until a time",
+      "keywords": [
+        "st pairing"
+      ],
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (3pm)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "eod",
+      "title": "End of Day",
+      "subtitle": "st",
+      "description": "Set an outside work hours status with DND until the next work day at 7am",
+      "keywords": [
+        "st eod"
+      ],
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (monday 8am)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "vacation",
+      "title": "Vacation",
+      "subtitle": "st",
+      "description": "Set an off recharging status with DND and mark GitHub busy",
+      "keywords": [
+        "st vacation"
+      ],
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (3/10 9am)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "sick",
+      "title": "Sick",
+      "subtitle": "st",
+      "description": "Set an out sick status with DND and mark GitHub busy",
+      "keywords": [
+        "st sick"
+      ],
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (tomorrow)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "away",
+      "title": "Away",
+      "subtitle": "st",
+      "description": "Set an away for a bit status with DND and mark GitHub busy, until 5pm by default",
+      "keywords": [
+        "st away"
+      ],
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "when",
+          "type": "text",
+          "required": false,
+          "placeholder": "Until (2pm)"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "back",
+      "title": "Back",
+      "subtitle": "st",
+      "description": "Clear DND and GitHub busy, and set a catching up status for 15 minutes",
+      "keywords": [
+        "st back"
+      ],
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "message",
+          "type": "text",
+          "required": false,
+          "placeholder": "Message"
+        }
+      ]
+    },
+    {
+      "name": "clear",
+      "title": "Clear Status",
+      "subtitle": "st",
+      "description": "Clear Slack status, DND, and GitHub status",
+      "keywords": [
+        "st clear"
+      ],
+      "mode": "no-view"
+    }
+  ],
+  "tools": [
+    {
+      "name": "set-status",
+      "title": "Set Status",
+      "description": "Set the user's status across Slack and GitHub using a keyword, an optional end date or time, and an optional custom message"
+    }
+  ],
+  "ai": {
+    "instructions": "This extension sets the user's work status in Slack and GitHub with the st CLI. Pick the keyword that matches what the user is doing: lunch, meeting, pairing, eod (done for the day), vacation, sick, away (out for part of the day), back (returning), or clear. Work days are Monday through Thursday. Pass when the user says when they'll be back, using formats like 'friday', 'tomorrow', '3/10', '3/10 9am', or just a time like '2pm'. Only pass a message when the user asks for specific status text. After setting an out of office status, remind the user to add a Google Calendar out-of-office event so Linear shows them as away."
+  },
+  "dependencies": {
+    "@raycast/api": "^1.104.0",
+    "sha256-file": "^1.0.0",
+    "tar": "^7.2.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^2.0.0",
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
+    "@types/sha256-file": "^1.0.3",
+    "@types/tar": "^6.1.13",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint"
+  }
+}
