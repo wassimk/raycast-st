@@ -2,6 +2,8 @@
 
 Raycast commands for [st](https://github.com/wassimk/st), which sets your status across Slack and GitHub with a single command, with reminders for Linear.
 
+<img src="media/raycast-st.png" alt="Raycast search for st showing the status commands" width="750">
+
 > [!CAUTION]
 > This is a personal tool and is not published to the Raycast Store. Use at your own risk.
 
