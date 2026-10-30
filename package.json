@@ -38,7 +38,6 @@
       "subtitle": "st",
       "description": "Set a lunch status with DND, ending at the next quarter hour plus an hour or at a given time",
       "keywords": [
-        "stl",
         "st lunch"
       ],
       "mode": "no-view",
@@ -63,7 +62,6 @@
       "subtitle": "st",
       "description": "Set an in a meeting status, optionally until a time",
       "keywords": [
-        "stm",
         "st meeting"
       ],
       "mode": "no-view",
@@ -88,7 +86,6 @@
       "subtitle": "st",
       "description": "Set an in a pairing session status, optionally until a time",
       "keywords": [
-        "stp",
         "st pairing"
       ],
       "mode": "no-view",
@@ -113,7 +110,6 @@
       "subtitle": "st",
       "description": "Set an outside work hours status with DND until the next work day at 7am",
       "keywords": [
-        "ste",
         "st eod"
       ],
       "mode": "no-view",
@@ -138,7 +134,6 @@
       "subtitle": "st",
       "description": "Set an off recharging status with DND and mark GitHub busy",
       "keywords": [
-        "stv",
         "st vacation"
       ],
       "mode": "no-view",
@@ -163,7 +158,6 @@
       "subtitle": "st",
       "description": "Set an out sick status with DND and mark GitHub busy",
       "keywords": [
-        "sts",
         "st sick"
       ],
       "mode": "no-view",
@@ -188,7 +182,6 @@
       "subtitle": "st",
       "description": "Set an away for a bit status with DND and mark GitHub busy, until 5pm by default",
       "keywords": [
-        "sta",
         "st away"
       ],
       "mode": "no-view",
@@ -213,7 +206,6 @@
       "subtitle": "st",
       "description": "Clear DND and GitHub busy, and set a catching up status for 15 minutes",
       "keywords": [
-        "stb",
         "st back"
       ],
       "mode": "no-view",
@@ -232,7 +224,6 @@
       "subtitle": "st",
       "description": "Clear Slack status, DND, and GitHub status",
       "keywords": [
-        "stc",
         "st clear"
       ],
       "mode": "no-view"
