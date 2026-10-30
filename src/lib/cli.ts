@@ -8,20 +8,10 @@ import * as tar from "tar";
 import { execFile } from "child_process";
 import sha256 from "sha256-file";
 
-const cliVersion = "0.3.0";
-const cliFileInfos = {
-  x64: {
-    arch: "x86_64",
-    pkg: "st-Darwin-x86_64.tar.gz",
-    sha256: "94a3a7da0bbcc2a7eed19cb4d5f8ceabd0380aa11a0d2130f3c11af3ff554d06",
-  },
-  arm64: {
-    arch: "aarch64",
-    pkg: "st-Darwin-aarch64.tar.gz",
-    sha256: "3496600e790e7cd74f6f7620e341ee6cd952b9e776d6bec8f6b82cdc73d84591",
-  },
-};
-const cliFileInfo = os.arch() === "arm64" ? cliFileInfos.arm64 : cliFileInfos.x64;
+const repoUrl = "https://github.com/wassimk/st";
+const latestReleaseApiUrl = "https://api.github.com/repos/wassimk/st/releases/latest";
+const updateCheckIntervalMs = 24 * 60 * 60 * 1000;
+const cliPackage = os.arch() === "arm64" ? "st-Darwin-aarch64.tar.gz" : "st-Darwin-x86_64.tar.gz";
 
 export type CLIOutput = {
   stdout: string;
@@ -82,12 +72,45 @@ function cliVersionFilePath(): string {
   return path.join(stCLIDirectory(), "st.version");
 }
 
-function isCurrentVersion(): boolean {
+function lastCheckFilePath(): string {
+  return path.join(stCLIDirectory(), "st.last-check");
+}
+
+function installedVersion(): string | null {
   try {
-    return fs.readFileSync(cliVersionFilePath(), "utf-8").trim() === cliVersion;
+    return fs.readFileSync(cliVersionFilePath(), "utf-8").trim() || null;
   } catch {
-    return false;
+    return null;
   }
+}
+
+function isUpdateCheckDue(): boolean {
+  try {
+    const lastCheck = Number(fs.readFileSync(lastCheckFilePath(), "utf-8"));
+    return Date.now() - lastCheck > updateCheckIntervalMs;
+  } catch {
+    return true;
+  }
+}
+
+async function latestVersion(): Promise<string> {
+  const response = await fetch(latestReleaseApiUrl, { headers: { "User-Agent": "raycast-st" } });
+  if (!response.ok) {
+    throw new Error(`GitHub releases API returned ${response.status}`);
+  }
+
+  const { tag_name } = (await response.json()) as { tag_name: string };
+  return tag_name.replace(/^v/, "");
+}
+
+// Each release publishes "<sha256>  <file>" next to the archive
+async function expectedHash(version: string): Promise<string> {
+  const response = await fetch(`${repoUrl}/releases/download/v${version}/${cliPackage}-sha.txt`);
+  if (!response.ok) {
+    throw new Error(`Checksum download returned ${response.status}`);
+  }
+
+  return (await response.text()).trim().split(/\s+/)[0];
 }
 
 // Raycast doesn't load the shell profile, so the tokens come from preferences
@@ -110,58 +133,71 @@ export async function execute(args: string[]): Promise<CLIOutput> {
   });
 }
 
+// Uses the installed st, checking GitHub for a newer release at most once a day.
+// If the check or download fails, an installed st keeps working.
 export async function ensureCLI() {
   const cli = stCLIFilePath();
+  const installed = fs.existsSync(cli) ? installedVersion() : null;
 
-  if (fs.existsSync(cli) && isCurrentVersion()) {
+  if (installed && !isUpdateCheckDue()) {
     return cli;
   }
 
-  // Remove outdated binary before re-downloading
-  if (fs.existsSync(cli)) {
-    fs.unlinkSync(cli);
+  try {
+    const latest = await latestVersion();
+    if (latest !== installed) {
+      await installCLI(latest);
+    }
+    await afs.writeFile(lastCheckFilePath(), String(Date.now()));
+  } catch (error) {
+    if (installed) {
+      console.log(error);
+      return cli;
+    }
+    throw error;
   }
 
-  const repoUrl = "https://github.com/wassimk/st";
-  const binaryURL = `${repoUrl}/releases/download/v${cliVersion}/${cliFileInfo.pkg}`;
+  return cli;
+}
+
+async function installCLI(version: string) {
+  const cli = stCLIFilePath();
   const cliDir = stCLIDirectory();
   const tempDir = path.join(environment.supportPath, ".tmp");
+  const archivePath = path.join(tempDir, cliPackage);
 
   await afs.mkdir(tempDir, { recursive: true });
-  const archivePath = path.join(tempDir, cliFileInfo.pkg);
 
   try {
-    await downloadFile(binaryURL, archivePath);
-  } catch {
-    throw new Error("Could not download st CLI");
-  }
+    try {
+      await downloadFile(`${repoUrl}/releases/download/v${version}/${cliPackage}`, archivePath);
+    } catch {
+      throw new Error("Could not download st CLI");
+    }
 
-  try {
-    const archiveHash = await sha256FileHash(archivePath);
-
-    if (archiveHash !== cliFileInfo.sha256) {
+    if ((await sha256FileHash(archivePath)) !== (await expectedHash(version))) {
       throw new Error("Hash of st CLI archive does not match");
     }
 
+    // Replace the old binary only after the new archive checks out
     await afs.mkdir(cliDir, { recursive: true });
-    await tar.extract({ file: archivePath, filter: (p) => p === "st", cwd: cliDir });
-  } catch (error) {
-    if (error instanceof Error && error.message.includes("Hash")) {
-      throw error;
+    await afs.rm(cli, { force: true });
+
+    try {
+      await tar.extract({ file: archivePath, filter: (p) => p === "st", cwd: cliDir });
+    } catch {
+      throw new Error("Could not extract downloaded archive of st CLI");
     }
-    throw new Error("Could not extract downloaded archive of st CLI");
   } finally {
-    await afs.rm(tempDir, { recursive: true });
+    await afs.rm(tempDir, { recursive: true, force: true });
   }
 
   try {
     await afs.chmod(cli, "755");
-    await afs.writeFile(cliVersionFilePath(), cliVersion);
+    await afs.writeFile(cliVersionFilePath(), version);
   } catch {
     await afs.rm(cli, { force: true });
     await afs.rm(cliVersionFilePath(), { force: true });
     throw new Error("Could not chmod st CLI");
   }
-
-  return cli;
 }
