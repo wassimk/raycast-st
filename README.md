@@ -12,7 +12,7 @@ Raycast commands for [st](https://github.com/wassimk/st), which sets your status
 - **One Command per Status**: Type `lunch`, `vacation`, or `back` in Raycast and press enter.
 - **Optional End Time and Message**: Each command takes an inline "Until" and "Message" argument, using the same date and time formats as `st`.
 - **Failure Reporting**: Shows which service failed and why, since `st` keeps going when one service errors.
-- **No Install Needed**: Downloads the latest `st` release from GitHub on first run, checks for a newer one once a day, and verifies each download's SHA-256 checksum.
+- **No Install Needed**: Downloads the latest `st` release from GitHub on first run, checks for a newer one once a day (or right away with Update CLI), and verifies each download's SHA-256 checksum.
 - **AI Integration**: Say "put me on vacation until Monday" or "I'm in a meeting until 3pm" in Raycast AI (requires Raycast Pro).
 
 ## 🛠️ Setup
@@ -48,6 +48,7 @@ To limit the GitHub busy status to one organization, create `~/.config/st/config
 | Away | Until, Message | Away for a bit with DND until 5pm, GitHub busy |
 | Back | Message | Clears DND and GitHub busy, catching up for 15 minutes |
 | Clear Status | | Clears everything |
+| Update CLI | | Downloads the latest `st` release now instead of waiting for the daily check |
 
 Each command also matches `st <keyword>`, like `st away`, so you can type it the same way as the CLI.
 
