@@ -133,6 +133,24 @@ export async function execute(args: string[]): Promise<CLIOutput> {
   });
 }
 
+export type CLIUpdate = {
+  version: string;
+  updated: boolean;
+};
+
+// Checks GitHub for the latest st release right away, skipping the daily wait
+export async function updateCLI(): Promise<CLIUpdate> {
+  const installed = fs.existsSync(stCLIFilePath()) ? installedVersion() : null;
+  const latest = await latestVersion();
+
+  if (latest !== installed) {
+    await installCLI(latest);
+  }
+  await afs.writeFile(lastCheckFilePath(), String(Date.now()));
+
+  return { version: latest, updated: latest !== installed };
+}
+
 // Uses the installed st, checking GitHub for a newer release at most once a day.
 // If the check or download fails, an installed st keeps working.
 export async function ensureCLI() {

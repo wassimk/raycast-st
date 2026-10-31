@@ -227,6 +227,17 @@
         "st clear"
       ],
       "mode": "no-view"
+    },
+    {
+      "name": "update-cli",
+      "title": "Update CLI",
+      "subtitle": "st",
+      "description": "Download the latest st release now instead of waiting for the daily check",
+      "keywords": [
+        "st update",
+        "update st"
+      ],
+      "mode": "no-view"
     }
   ],
   "tools": [
