@@ -252,6 +252,7 @@
   },
   "dependencies": {
     "@raycast/api": "^1.104.0",
+    "gemoji": "^8.1.0",
     "sha256-file": "^1.0.0",
     "tar": "^7.2.0"
   },

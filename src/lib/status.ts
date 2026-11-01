@@ -1,4 +1,5 @@
 import { showHUD, showToast, Toast } from "@raycast/api";
+import { nameToEmoji } from "gemoji";
 import { execute } from "./cli";
 
 export type Keyword = "lunch" | "meeting" | "pairing" | "eod" | "vacation" | "sick" | "away" | "back" | "clear";
@@ -14,15 +15,11 @@ type ServiceResult = {
   detail: string;
 };
 
-// Slack shortcodes st prints, shown as emoji in the HUD. Custom workspace emoji are dropped.
-const EMOJI: Record<string, string> = {
-  fork_and_knife: "🍴",
-  mantelpiece_clock: "🕰️",
-  desert_island: "🏝️",
-  face_with_thermometer: "🤒",
-  car: "🚗",
-  inbox_tray: "📥",
-};
+// Slack uses GitHub's emoji names for standard emoji. Custom workspace emoji, like
+// :virtual-meeting:, have no Unicode version, so they're dropped.
+export function emojiFor(shortcode: string): string | undefined {
+  return nameToEmoji[shortcode.replace(/^:|:$/g, "")];
+}
 
 // "When" can be a date and a time, which st expects as separate words. The message stays one
 // word so st can't read a message like "3 day weekend" as a time.
@@ -43,7 +40,7 @@ function parseResults(output: string): ServiceResult[] {
 
 function replaceShortcodes(text: string): string {
   return text
-    .replace(/:([\w+-]+):/g, (_, name: string) => EMOJI[name] ?? "")
+    .replace(/:[\w+'-]+:/g, (shortcode) => emojiFor(shortcode) ?? "")
     .replace(/\s+/g, " ")
     .trim();
 }
