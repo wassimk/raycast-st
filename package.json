@@ -60,7 +60,7 @@
       "name": "meeting",
       "title": "Meeting",
       "subtitle": "st",
-      "description": "Set an in a meeting status, optionally until a time",
+      "description": "Set a meeting status, optionally until a time",
       "keywords": [
         "st meeting"
       ],
@@ -84,7 +84,7 @@
       "name": "pairing",
       "title": "Pairing",
       "subtitle": "st",
-      "description": "Set an in a pairing session status, optionally until a time",
+      "description": "Set a pairing status, optionally until a time",
       "keywords": [
         "st pairing"
       ],
@@ -108,7 +108,7 @@
       "name": "eod",
       "title": "End of Day",
       "subtitle": "st",
-      "description": "Set an outside work hours status with DND until the next work day at 7am",
+      "description": "Set an end of day status with DND until the next work day at 7am",
       "keywords": [
         "st eod"
       ],
@@ -132,7 +132,7 @@
       "name": "vacation",
       "title": "Vacation",
       "subtitle": "st",
-      "description": "Set an off recharging status with DND and mark GitHub busy",
+      "description": "Set a vacation status with DND and mark GitHub busy",
       "keywords": [
         "st vacation"
       ],
@@ -156,7 +156,7 @@
       "name": "sick",
       "title": "Sick",
       "subtitle": "st",
-      "description": "Set an out sick status with DND and mark GitHub busy",
+      "description": "Set a sick status with DND and mark GitHub busy",
       "keywords": [
         "st sick"
       ],
@@ -180,7 +180,7 @@
       "name": "away",
       "title": "Away",
       "subtitle": "st",
-      "description": "Set a stepped away for a bit status with DND and mark GitHub busy, until 5pm by default",
+      "description": "Set an away status with DND and mark GitHub busy, until 5pm by default",
       "keywords": [
         "st away"
       ],
@@ -204,7 +204,7 @@
       "name": "back",
       "title": "Back",
       "subtitle": "st",
-      "description": "Clear DND and GitHub busy, and set a catching up status for 15 minutes",
+      "description": "Clear DND and GitHub busy, and set a back status for 15 minutes",
       "keywords": [
         "st back"
       ],
@@ -229,6 +229,17 @@
       "mode": "no-view"
     },
     {
+      "name": "custom-status",
+      "title": "Custom Status",
+      "subtitle": "st",
+      "description": "Set a status from a keyword you added in your st config, like a sabbatical",
+      "keywords": [
+        "st custom",
+        "st keywords"
+      ],
+      "mode": "view"
+    },
+    {
       "name": "update-cli",
       "title": "Update CLI",
       "subtitle": "st",
@@ -245,13 +256,19 @@
       "name": "set-status",
       "title": "Set Status",
       "description": "Set the user's status across Slack and GitHub using a keyword, an optional end date or time, and an optional custom message"
+    },
+    {
+      "name": "list-keywords",
+      "title": "List Keywords",
+      "description": "List the user's st keywords, including custom ones from their st config, with each one's emoji, text, and the built-in keyword it acts like"
     }
   ],
   "ai": {
-    "instructions": "This extension sets the user's work status in Slack and GitHub with the st CLI. Pick the keyword that matches what the user is doing: lunch, meeting, pairing, eod (done for the day), vacation, sick, away (out for part of the day), back (returning), or clear. Work days are Monday through Thursday. Pass when the user says when they'll be back, using formats like 'friday', 'tomorrow', '3/10', '3/10 9am', or just a time like '2pm'. Only pass a message when the user asks for specific status text. After setting an out of office status, remind the user to add a Google Calendar out-of-office event so Linear shows them as away."
+    "instructions": "This extension sets the user's work status in Slack and GitHub with the st CLI. Pick the keyword that matches what the user is doing: lunch, meeting, pairing, eod (done for the day), vacation, sick, away (out for part of the day), back (returning), or clear. The user may also have custom keywords from their st config, like sabbatical. When a request doesn't fit a built-in keyword, call list-keywords and use a custom keyword whose name or text matches. Work days are Monday through Thursday. Pass when the user says when they'll be back, using formats like 'friday', 'tomorrow', '3/10', '3/10 9am', or just a time like '2pm'. Only pass a message when the user asks for specific status text. After setting an out of office status, remind the user to add a Google Calendar out-of-office event so Linear shows them as away."
   },
   "dependencies": {
     "@raycast/api": "^1.104.0",
+    "gemoji": "^8.1.0",
     "sha256-file": "^1.0.0",
     "tar": "^7.2.0"
   },
