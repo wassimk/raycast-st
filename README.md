@@ -48,9 +48,12 @@ To limit the GitHub busy status to one organization, create `~/.config/st/config
 | Away | Until, Message | Away with DND until 5pm, GitHub busy |
 | Back | Message | Clears DND and GitHub busy, back for 15 minutes |
 | Clear Status | | Clears everything |
+| Custom Status | | Lists keywords you added in your `st` config, then asks for Until and Message |
 | Update CLI | | Downloads the latest `st` release now instead of waiting for the daily check |
 
 The emoji and status text come from `st`, including any you change in its config. See [Your Own Keywords](https://github.com/wassimk/st#your-own-keywords) in the st README.
+
+Custom Status shows keywords with a `base` from the `[keywords.NAME]` tables in `~/.config/st/config.toml`, like a sabbatical based on vacation. Each one acts like its base keyword, with your emoji and text.
 
 Each command also matches `st <keyword>`, like `st away`, so you can type it the same way as the CLI.
 

@@ -1,4 +1,4 @@
-import { Keyword, runStatus } from "../lib/status";
+import { BuiltInKeyword, runStatus } from "../lib/status";
 
 type Input = {
   /**
@@ -6,7 +6,7 @@ type Input = {
    * vacation, sick, and away are out of office and mark GitHub busy. back returns from any of
    * these, and clear removes every status.
    */
-  keyword: Keyword;
+  keyword: BuiltInKeyword;
   /**
    * When the user will be back, as a date, a date and time, or a time today. Examples: "friday",
    * "tomorrow", "3/10", "3/10 9am", "2pm". Leave empty to use the keyword's default end.

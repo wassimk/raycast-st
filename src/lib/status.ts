@@ -2,7 +2,22 @@ import { showHUD, showToast, Toast } from "@raycast/api";
 import { nameToEmoji } from "gemoji";
 import { execute } from "./cli";
 
-export type Keyword = "lunch" | "meeting" | "pairing" | "eod" | "vacation" | "sick" | "away" | "back" | "clear";
+export type BuiltInKeyword = "lunch" | "meeting" | "pairing" | "eod" | "vacation" | "sick" | "away" | "back" | "clear";
+
+// A built-in keyword, or one added in the st config
+export type Keyword = BuiltInKeyword | (string & {});
+
+// One entry from `st keywords --json`. base is the built-in keyword a custom one acts like,
+// and null for a built-in keyword.
+export type KeywordInfo = {
+  keyword: string;
+  base: BuiltInKeyword | null;
+  emoji: string;
+  text: string;
+  dnd: boolean;
+  github_busy: boolean;
+  out_of_office: boolean;
+};
 
 export type StatusArguments = {
   when?: string;
@@ -43,6 +58,13 @@ function replaceShortcodes(text: string): string {
     .replace(/:[\w+'-]+:/g, (shortcode) => emojiFor(shortcode) ?? "")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+// Every keyword st knows after the config is applied, built-in ones first. Config warnings go
+// to stderr, so only stdout is parsed.
+export async function listKeywords(): Promise<KeywordInfo[]> {
+  const { stdout } = await execute(["keywords", "--json"]);
+  return JSON.parse(stdout) as KeywordInfo[];
 }
 
 export async function runStatus(keyword: Keyword, args: StatusArguments = {}): Promise<string> {

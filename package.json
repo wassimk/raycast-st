@@ -229,6 +229,17 @@
       "mode": "no-view"
     },
     {
+      "name": "custom-status",
+      "title": "Custom Status",
+      "subtitle": "st",
+      "description": "Set a status from a keyword you added in your st config, like a sabbatical",
+      "keywords": [
+        "st custom",
+        "st keywords"
+      ],
+      "mode": "view"
+    },
+    {
       "name": "update-cli",
       "title": "Update CLI",
       "subtitle": "st",
