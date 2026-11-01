@@ -180,7 +180,7 @@
       "name": "away",
       "title": "Away",
       "subtitle": "st",
-      "description": "Set an away for a bit status with DND and mark GitHub busy, until 5pm by default",
+      "description": "Set a stepped away for a bit status with DND and mark GitHub busy, until 5pm by default",
       "keywords": [
         "st away"
       ],

@@ -45,7 +45,7 @@ To limit the GitHub busy status to one organization, create `~/.config/st/config
 | End of Day | Until, Message | Outside work hours with DND until 7am the next work day |
 | Vacation | Until, Message | Off recharging with DND, GitHub busy |
 | Sick | Until, Message | Out sick with DND, GitHub busy |
-| Away | Until, Message | Away for a bit with DND until 5pm, GitHub busy |
+| Away | Until, Message | Stepped away for a bit with DND until 5pm, GitHub busy |
 | Back | Message | Clears DND and GitHub busy, catching up for 15 minutes |
 | Clear Status | | Clears everything |
 | Update CLI | | Downloads the latest `st` release now instead of waiting for the daily check |
