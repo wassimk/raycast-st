@@ -20,7 +20,7 @@ const EMOJI: Record<string, string> = {
   mantelpiece_clock: "🕰️",
   desert_island: "🏝️",
   face_with_thermometer: "🤒",
-  no_entry: "⛔",
+  car: "🚗",
   inbox_tray: "📥",
 };
 
