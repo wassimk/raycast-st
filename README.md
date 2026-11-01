@@ -39,16 +39,18 @@ To limit the GitHub busy status to one organization, create `~/.config/st/config
 
 | Command | Arguments | Description |
 |---------|-----------|-------------|
-| Lunch | Until, Message | 🍴 with DND until the next quarter hour plus an hour |
+| Lunch | Until, Message | Lunch with DND until the next quarter hour plus an hour |
 | Meeting | Until, Message | In a meeting, optionally until a time |
-| Pairing | Until, Message | In a pairing session, optionally until a time |
-| End of Day | Until, Message | Outside work hours with DND until 7am the next work day |
-| Vacation | Until, Message | Off recharging with DND, GitHub busy |
+| Pairing | Until, Message | Pairing, optionally until a time |
+| End of Day | Until, Message | Done for the day with DND until 7am the next work day |
+| Vacation | Until, Message | Vacation with DND, GitHub busy |
 | Sick | Until, Message | Out sick with DND, GitHub busy |
-| Away | Until, Message | Stepped away for a bit with DND until 5pm, GitHub busy |
-| Back | Message | Clears DND and GitHub busy, catching up for 15 minutes |
+| Away | Until, Message | Away with DND until 5pm, GitHub busy |
+| Back | Message | Clears DND and GitHub busy, back for 15 minutes |
 | Clear Status | | Clears everything |
 | Update CLI | | Downloads the latest `st` release now instead of waiting for the daily check |
+
+The emoji and status text come from `st`, including any you change in its config. See [Your Own Keywords](https://github.com/wassimk/st#your-own-keywords) in the st README.
 
 Each command also matches `st <keyword>`, like `st away`, so you can type it the same way as the CLI.
 

@@ -60,7 +60,7 @@
       "name": "meeting",
       "title": "Meeting",
       "subtitle": "st",
-      "description": "Set an in a meeting status, optionally until a time",
+      "description": "Set a meeting status, optionally until a time",
       "keywords": [
         "st meeting"
       ],
@@ -84,7 +84,7 @@
       "name": "pairing",
       "title": "Pairing",
       "subtitle": "st",
-      "description": "Set an in a pairing session status, optionally until a time",
+      "description": "Set a pairing status, optionally until a time",
       "keywords": [
         "st pairing"
       ],
@@ -108,7 +108,7 @@
       "name": "eod",
       "title": "End of Day",
       "subtitle": "st",
-      "description": "Set an outside work hours status with DND until the next work day at 7am",
+      "description": "Set an end of day status with DND until the next work day at 7am",
       "keywords": [
         "st eod"
       ],
@@ -132,7 +132,7 @@
       "name": "vacation",
       "title": "Vacation",
       "subtitle": "st",
-      "description": "Set an off recharging status with DND and mark GitHub busy",
+      "description": "Set a vacation status with DND and mark GitHub busy",
       "keywords": [
         "st vacation"
       ],
@@ -156,7 +156,7 @@
       "name": "sick",
       "title": "Sick",
       "subtitle": "st",
-      "description": "Set an out sick status with DND and mark GitHub busy",
+      "description": "Set a sick status with DND and mark GitHub busy",
       "keywords": [
         "st sick"
       ],
@@ -180,7 +180,7 @@
       "name": "away",
       "title": "Away",
       "subtitle": "st",
-      "description": "Set a stepped away for a bit status with DND and mark GitHub busy, until 5pm by default",
+      "description": "Set an away status with DND and mark GitHub busy, until 5pm by default",
       "keywords": [
         "st away"
       ],
@@ -204,7 +204,7 @@
       "name": "back",
       "title": "Back",
       "subtitle": "st",
-      "description": "Clear DND and GitHub busy, and set a catching up status for 15 minutes",
+      "description": "Clear DND and GitHub busy, and set a back status for 15 minutes",
       "keywords": [
         "st back"
       ],
