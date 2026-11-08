@@ -151,13 +151,25 @@ export async function updateCLI(): Promise<CLIUpdate> {
   return { version: latest, updated: latest !== installed };
 }
 
-// Uses the installed st, checking GitHub for a newer release at most once a day.
-// If the check or download fails, an installed st keeps working.
+// The oldest st with every flag the commands pass, like --focus
+const MIN_CLI_VERSION = "0.6.0";
+
+export function isOlderThan(version: string, minimum: string): boolean {
+  const parts = (v: string) => v.split(".").map((n) => parseInt(n, 10) || 0);
+  const [a, b] = [parts(version), parts(minimum)];
+  for (let i = 0; i < Math.max(a.length, b.length); i++) {
+    if ((a[i] ?? 0) !== (b[i] ?? 0)) return (a[i] ?? 0) < (b[i] ?? 0);
+  }
+  return false;
+}
+
+// Uses the installed st, checking GitHub for a newer release at most once a day, or right away
+// when the installed one is too old. If the check or download fails, an installed st keeps working.
 export async function ensureCLI() {
   const cli = stCLIFilePath();
   const installed = fs.existsSync(cli) ? installedVersion() : null;
 
-  if (installed && !isUpdateCheckDue()) {
+  if (installed && !isUpdateCheckDue() && !isOlderThan(installed, MIN_CLI_VERSION)) {
     return cli;
   }
 
