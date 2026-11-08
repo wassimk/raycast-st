@@ -33,6 +33,14 @@ Raycast asks for two preferences the first time you run a command:
 
 Raycast doesn't load your shell profile, so these are separate from the `SLACK_PAT` and `GITHUB_PAT` environment variables the CLI uses. The extension passes them to `st` under those names.
 
+Meeting and Pairing turn on macOS Do Not Disturb, and Back and Clear Status turn it off, using `st --focus`. If the status has an end time, Do Not Disturb turns off then too. This needs the `st Focus` shortcut in the Shortcuts app. Install it once from a terminal:
+
+```
+st setup-focus
+```
+
+Custom keywords based on meeting, pairing, or back do the same. Without the shortcut, the status is still set and Raycast shows that Focus failed.
+
 To limit the GitHub busy status to one organization, create `~/.config/st/config.toml` as described in the [st README](https://github.com/wassimk/st#config-file). The extension uses the same file.
 
 ## 💻 Commands
@@ -40,14 +48,14 @@ To limit the GitHub busy status to one organization, create `~/.config/st/config
 | Command | Arguments | Description |
 |---------|-----------|-------------|
 | Lunch | Until, Message | Lunch with DND until the next quarter hour plus an hour |
-| Meeting | Until, Message | In a meeting, optionally until a time |
-| Pairing | Until, Message | Pairing, optionally until a time |
+| Meeting | Until, Message | In a meeting, optionally until a time, with macOS Do Not Disturb on |
+| Pairing | Until, Message | Pairing, optionally until a time, with macOS Do Not Disturb on |
 | End of Day | Until, Message | Done for the day with DND until 7am the next work day |
 | Vacation | Until, Message | Vacation with DND, GitHub busy |
 | Sick | Until, Message | Out sick with DND, GitHub busy |
 | Away | Until, Message | Away with DND until 5pm, GitHub busy |
-| Back | Message | Clears DND and GitHub busy, back for 15 minutes |
-| Clear Status | | Clears everything |
+| Back | Message | Clears DND, macOS Do Not Disturb, and GitHub busy, back for 15 minutes |
+| Clear Status | | Clears everything, including macOS Do Not Disturb |
 | Custom Status | | Lists keywords you added in your `st` config, then asks for Until and Message |
 | Update CLI | | Downloads the latest `st` release now instead of waiting for the daily check |
 

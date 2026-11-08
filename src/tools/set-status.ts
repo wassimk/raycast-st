@@ -1,4 +1,4 @@
-import { listKeywords, runStatus } from "../lib/status";
+import { listKeywords, runStatus, usesFocus } from "../lib/status";
 
 type Input = {
   /**
@@ -28,14 +28,16 @@ export default async function tool(input: Input): Promise<string> {
   const { when, message } = input;
 
   if (keyword === "clear") {
-    return runStatus(keyword);
+    return runStatus(keyword, {}, true);
   }
 
   // st would reject it too, but this lists the keywords so the AI can pick one
-  const names = (await listKeywords()).map((k) => k.keyword);
-  if (!names.includes(keyword)) {
+  const keywords = await listKeywords();
+  const match = keywords.find((k) => k.keyword === keyword);
+  if (!match) {
+    const names = keywords.map((k) => k.keyword);
     return `Unknown keyword "${input.keyword}". Use one of: ${[...names, "clear"].join(", ")}`;
   }
 
-  return runStatus(keyword, { when, message });
+  return runStatus(keyword, { when, message }, usesFocus(match.base ?? match.keyword));
 }
