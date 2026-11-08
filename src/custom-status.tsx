@@ -2,7 +2,15 @@ import { Action, ActionPanel, Form, Icon, List } from "@raycast/api";
 import os from "os";
 import path from "path";
 import { useEffect, useState } from "react";
-import { BuiltInKeyword, emojiFor, KeywordInfo, listKeywords, setStatus, StatusArguments } from "./lib/status";
+import {
+  BuiltInKeyword,
+  emojiFor,
+  KeywordInfo,
+  listKeywords,
+  setStatus,
+  StatusArguments,
+  usesFocus,
+} from "./lib/status";
 
 const configPath = path.join(os.homedir(), ".config", "st", "config.toml");
 
@@ -30,7 +38,7 @@ function StatusForm({ keyword }: { keyword: KeywordInfo }) {
           <Action.SubmitForm
             title="Set Status"
             icon={Icon.Check}
-            onSubmit={(values: StatusArguments) => setStatus(keyword.keyword, values)}
+            onSubmit={(values: StatusArguments) => setStatus(keyword.keyword, values, usesFocus(keyword.base))}
           />
         </ActionPanel>
       }

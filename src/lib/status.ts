@@ -36,12 +36,21 @@ export function emojiFor(shortcode: string): string | undefined {
   return nameToEmoji[shortcode.replace(/^:|:$/g, "")];
 }
 
+// Meetings and pairing turn on macOS Do Not Disturb, and back and clear turn it off
+const FOCUS_KEYWORDS: readonly string[] = ["meeting", "pairing", "back", "clear"];
+
+// Takes a built-in keyword, or the base a custom keyword acts like
+export function usesFocus(keyword: string | null): boolean {
+  return keyword !== null && FOCUS_KEYWORDS.includes(keyword);
+}
+
 // "When" can be a date and a time, which st expects as separate words. The message stays one
-// word so st can't read a message like "3 day weekend" as a time.
-export function buildArgs(keyword: Keyword, { when, message }: StatusArguments): string[] {
+// word so st can't read a message like "3 day weekend" as a time. --focus goes first, since st
+// before 0.6.0 read a flag after the message as more message text.
+export function buildArgs(keyword: Keyword, { when, message }: StatusArguments, focus = false): string[] {
   const whenWords = when?.trim().split(/\s+/).filter(Boolean) ?? [];
   const messageWords = message?.trim() ? [message.trim()] : [];
-  return [keyword, ...whenWords, ...messageWords];
+  return [...(focus ? ["--focus"] : []), keyword, ...whenWords, ...messageWords];
 }
 
 // st prints one line per service, like "  Slack   ✓ In a meeting :virtual-meeting:"
@@ -67,15 +76,15 @@ export async function listKeywords(): Promise<KeywordInfo[]> {
   return JSON.parse(stdout) as KeywordInfo[];
 }
 
-export async function runStatus(keyword: Keyword, args: StatusArguments = {}): Promise<string> {
-  const { stdout, stderr } = await execute(buildArgs(keyword, args));
+export async function runStatus(keyword: Keyword, args: StatusArguments = {}, focus = false): Promise<string> {
+  const { stdout, stderr } = await execute(buildArgs(keyword, args, focus));
   return [stdout, stderr].filter(Boolean).join("\n").trim();
 }
 
-export async function setStatus(keyword: Keyword, args: StatusArguments = {}) {
+export async function setStatus(keyword: Keyword, args: StatusArguments = {}, focus = false) {
   let output: string;
   try {
-    output = await runStatus(keyword, args);
+    output = await runStatus(keyword, args, focus);
   } catch (error) {
     await showToast({
       style: Toast.Style.Failure,
